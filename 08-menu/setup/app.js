@@ -71,23 +71,69 @@ const menu = [
     img: "./images/item-9.jpeg",
     desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
   },
+  {
+    id: 10,
+    title: "steak dinner",
+    category: "dinner",
+    price: 39.99,
+    img: "./images/item-10.jpeg",
+    desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
+  }
 ];
 
 // SOLUTION1
 const sectionCenter = document.querySelector('.section-center');
+const containerBtns = document.querySelector('.btn-container');
 
 window.addEventListener("DOMContentLoaded", function () {
-  displayMenuItems(menu)
-})
+  displayMenuItems(menu);
+  const category = menu.reduce(function (acc, val) {
+    if (!acc.includes(val.category)) {
+      acc.push(val.category)
+    }
+    return acc;
+  }, ["all"])
+  // console.log(category);
+  const categoryBtns = category.map(function (btn) {
+    const button = `<button class="filter-btn" data-id="${btn}" type="button">${btn}</button>`;
+    return button;
+  }).join('')
+  containerBtns.innerHTML = categoryBtns;
 
+  // filter menu with buttons
+  const filterBtns = document.querySelectorAll('.filter-btn')
+  console.log(filterBtns);
+  filterBtns.forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      const category = e.currentTarget.dataset.id;
+      const menuCategory = menu.filter(function (menuItem) {
+        // console.log(menuItem.category);
+        // check 
+        if (menuItem.category === category) {
+          return menuItem;
+        }
+      })
+      // console.log(menuCategory);
+      if(category === 'all'){
+        displayMenuItems(menu)
+      }else{
+        displayMenuItems(menuCategory)
+      }
+    })
+  })
+  // filterBtns.forEach(function (btn) {
+  //   btn.addEveneListener('click', function () {
+  //     console.log('say hi')
+  //   })
+  // })
+})
 
 
 // function to display menu items
 function displayMenuItems(menuItem) {
-  const displayItems =
-    menuItem.map(function (item) {
-      const items =
-        `<article class="menu-item">
+  const displayItems = menuItem.map(function (item) {
+    const items =
+      `<article class="menu-item">
             <img src=${item.img} alt=${item.title} class="photo">
             <div class="item-info">
               <header>
@@ -97,11 +143,13 @@ function displayMenuItems(menuItem) {
               <p class="item-text">${item.desc}</p>
             </div>
         </article>`
-      // console.log(items);
-      return items
-    })
+    // console.log(items);
+    return items
+  })
   sectionCenter.innerHTML = displayItems.join("")
 }
+
+
 
 /*
 // soln2
