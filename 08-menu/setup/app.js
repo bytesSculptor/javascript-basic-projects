@@ -72,3 +72,94 @@ const menu = [
     desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
   },
 ];
+
+// SOLUTION1
+const sectionCenter = document.querySelector('.section-center');
+
+window.addEventListener("DOMContentLoaded", function () {
+  displayMenuItems(menu)
+})
+
+
+
+// function to display menu items
+function displayMenuItems(menuItem) {
+  const displayItems =
+    menuItem.map(function (item) {
+      const items =
+        `<article class="menu-item">
+            <img src=${item.img} alt=${item.title} class="photo">
+            <div class="item-info">
+              <header>
+                <h4>${item.title}</h4>
+                <p class="price">$${item.price}</p>
+              </header>
+              <p class="item-text">${item.desc}</p>
+            </div>
+        </article>`
+      // console.log(items);
+      return items
+    })
+  sectionCenter.innerHTML = displayItems.join("")
+}
+
+/*
+// soln2
+const sectionCenter = document.querySelector('.section-center');
+const filterBtns = document.querySelectorAll('.filter-btn');
+
+window.addEventListener('DOMContentLoaded', function () {
+  displayMenuItems(menu);
+
+  const categories = menu.reduce(function (acc, val) {
+    if (!acc.includes(val.category)) {
+      acc.push(val.category)
+    }
+    return acc;
+  })
+  console.log(categories);
+}, ['all'])
+
+
+//filter items
+filterBtns.forEach(function (btn) {
+  btn.addEventListener("click", function (e) {
+    const category = e.currentTarget.dataset.id; //breakfast
+    const menuCategory = menu.filter(function (menuItem) {
+      if (menuItem.category === category) {
+        return menuItem
+      }
+    })
+    // console.log(menuCategory);
+    if (category === 'all') {
+      displayMenuItems(menu)
+    } else {
+      displayMenuItems(menuCategory)
+    }
+  })
+})
+
+
+function displayMenuItems(menuItems) {
+  // console.log('working');
+  const displayMenu = menuItems.map(function (item) {
+    // console.log(item);
+    const displayItems =
+      `
+      <article class="menu-item">
+        <img src=${item.img} alt="${item.title}" class="photo">
+        <div class="item-info">
+          <header>
+            <h4>${item.title}</h4>
+            <p class="price">$${item.price}</p>
+          </header>
+          <p class="item-text">${item.desc}</p>
+        </div>
+      </article>
+      `
+    return displayItems;
+  })
+  sectionCenter.innerHTML = displayMenu.join("")
+  // console.log(displayMenu);
+}
+*/
